@@ -32,6 +32,8 @@ function precarga ()
 {
 	this.load.image('huevera', 'huevera.png');
 	this.load.image('huevo', 'huevo.png');
+	this.load.image('gallinero', 'gallinero.jpg');
+	this.load.image('grass', 'bg.jpg');
 }
 
 function crea ()
@@ -39,17 +41,83 @@ function crea ()
 	//rect = this.add.rectangle(400, 225, 32, 32, 0xffffff);
 	
 	let marron = Phaser.Display.Color.GetColor(192, 128, 16);
+	let dorado = Phaser.Display.Color.GetColor(255, 215, 0);
+
+	canvas_bg = this.add.image(canvas_w/2, canvas_h/2, 'grass');
+	gallinero = this.add.image(0, canvas_h/2, 'gallinero');
+	gallinero.setScale(1);	
 
 
-	huevera_m = this.add.image(400, 160, 'huevera');
+	huevera_m = this.add.image(100, 220, 'huevera');
 	huevera_m.setScale(.5);
 	huevera_m.setTint(marron);
 
-	huevo_m = this.add.image(400, 50, 'huevo');
-	huevo_m.setScale(.5);
+	huevo_m = this.add.image(400, 220, 'huevo');
+	huevo_m.setScale(1.0);
 	huevo_m.setTint(marron);
+	huevo_m.setInteractive({
+		draggable: true
+	});
+	huevo_m.on('pointerdown', function (){
+		console.log("huevo marron");
+		this.setScale(1.3);
+	});
 
 
+	huevera_d = this.add.image(100, 80, 'huevera');
+	huevera_d.setScale(.5);
+	huevera_d.setTint(dorado);
+
+	huevo_d = this.add.image(400, 80, 'huevo');
+	huevo_d.setScale(1.0);
+	huevo_d.setTint(dorado);
+	huevo_d.setInteractive({
+		draggable: true
+	});
+	huevo_d.on('pointerdown', function (){
+		console.log("huevo dorado");
+		this.setScale(1.3);
+	});
+
+
+	huevera_b = this.add.image(100, 360, 'huevera');
+	huevera_b.setScale(.5);
+
+	huevo_b = this.add.image(400, 360, 'huevo');
+	huevo_b.setScale(1.0);
+	huevo_b.setInteractive({
+		draggable: true
+	});
+	huevo_b.on('pointerdown', function (){
+		console.log("huevo blanco")
+		this.setScale(1.3);
+	});
+
+
+	//Hacer el drag
+	huevo_m.on('drag', (pointer, x, y) => {
+		huevo_m.x = x;
+		huevo_m.y = y;
+	});
+	huevo_m.on('dragend', (pointer, x, y) => {
+		huevo_m.setScale(1);
+	});
+
+	huevo_d.on('drag', (pointer, x, y) => {
+		huevo_d.x = x;
+		huevo_d.y = y;
+	});
+	huevo_d.on('dragend', (pointer, x, y) => {
+		huevo_d.setScale(1);
+	});
+
+	huevo_b.on('drag', (pointer, x, y) => {
+		huevo_b.x = x;
+		huevo_b.y = y;
+	});
+	huevo_b.on('dragend', (pointer, x, y) => {
+		huevo_b.setScale(1);
+	});
 
 	//flechas = this.input.keyboard.createCursorKeys();
 }
